@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="main">
+      <div class="card-both">
+        <div class="card-front">
+          <div class="card-front-top">
+            <div class="card-type">
+              <img src="/img/chip.png" alt="" />
+              <img src="/img/visa.png" alt="" />
+            </div>
+          </div>
+          <label for="cardNumber" class="card-number">
+            <div class="card-number-hidden">
+              <span>#</span><span>#</span><span>#</span><span>#</span>
+            </div>
+            <div class="card-number-hidden">
+              <span>#</span><span>#</span><span>#</span><span>#</span>
+            </div>
+            <div class="card-number-hidden">
+              <span>#</span><span>#</span><span>#</span><span>#</span>
+            </div>
+            <div class="card-number-hidden">
+              <span>#</span><span>#</span><span>#</span><span>#</span>
+            </div>
+          </label>
+          <div class="card-details">
+            <div class="card-holder-info">
+              <label for="cardHolderInfo">Card Holder</label>
+              <label for="cardHolder" class="card-holder-name">Full Name</label>
+            </div>
+            <div class="card-date">
+              <p>Expires</p>
+              <label for="cardMonth" class="card-expire-month"
+                ><span>MM</span>
+              </label>
+              <span>/</span>
+              <label for="cardYear" class="card-expire-year">
+                <span>YY</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="card-magnetic-line"></div>
+          <div class="card-cvv-white">
+            <div class="card-cvv-content"></div>
+          </div>
+          <div class="back-img">
+            <img src="/img/visa.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card-form">
+        <div class="card-input">
+          <label for="cardNumber" class="card-number-label">Card Number</label>
+          <input type="text" maxlength="19" class="card-number-input" />
+        </div>
+        <div class="card-input">
+          <label for="cardHolder" class="card-holder-label">Card Holders</label>
+          <input type="text" class="card-holder-input" />
+        </div>
+        <div class="card-select">
+          <div class="card-select-data">
+            <label for="cardMonth">Expiration date</label>
+            <div class="card-choose">
+              <select name="cardDetail" id="cardMonth">
+                <option value="" disabled="disabled" selected="selected">
+                  Month
+                </option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+              <select name="cardDetail" id="cardYear">
+                <option value="" disabled="disabled" selected="selected">
+                  Year
+                </option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-select-cvv">
+            <label for="cardCvv">CVV</label>
+            <input type="text" id="cardCvv" maxlength="3" />
+          </div>
+        </div>
+        <button class="card-form-button">Submit</button>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
