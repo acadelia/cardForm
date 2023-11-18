@@ -15,7 +15,6 @@
   position: relative;
   width: 350px;
   height: 220px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
   z-index: 1;
   top: 20%;
   left: 50%;
@@ -66,9 +65,14 @@
 }
 
 .card-cvv-content {
-  background-color: black;
   height: 40px;
   width: 20%;
+}
+
+.card-cvv-content span {
+  display: block;
+  margin-top: 10px;
+  font-size: 20px;
 }
 
 .card-select-cvv {
@@ -97,7 +101,7 @@
 }
 
 img {
-  width: 60px;
+  width: 70px;
   height: auto;
 }
 
@@ -107,13 +111,16 @@ img {
   display: flex;
   justify-content: space-around;
   margin-top: 30px;
+  padding: 5px;
+  overflow: hidden;
+  height: 30px;
 }
 
 .card-details {
   color: white;
   display: flex;
   justify-content: space-between;
-  padding-top: 50px;
+  padding-top: 30px;
 }
 
 .card-holder-info label {
@@ -127,6 +134,21 @@ img {
 .card-holder-name {
   text-transform: uppercase;
   font-size: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.card-holder-name .slide-right {
+  animation: 3s slide-right;
+}
+
+@keyframes fadeInLeft {
+  from {
+    margin-left: -100%;
+  }
+  to {
+    margin-left: 0%;
+  }
 }
 
 .card-form {
@@ -188,4 +210,94 @@ input {
   background: linear-gradient(45deg, blueviolet, rgb(36, 20, 255));
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.card-number-hidden {
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+}
+
+.card-number-hidden.slide {
+  animation: slideup 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideup {
+  0% {
+    top: 0px;
+  }
+  20% {
+    top: -10px;
+  }
+  40% {
+    top: -20px;
+  }
+  60% {
+    top: 30px;
+  }
+  80% {
+    top: 15px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: fixed;
+  z-index: 3;
+  bottom: 65%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.popup .show {
+  visibility: visible;
+  animation: fadeIn 1s;
+  z-index: 4;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.border {
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 3px;
 }

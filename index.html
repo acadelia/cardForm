@@ -20,7 +20,7 @@
           <div class="card-front-top">
             <div class="card-type">
               <img src="/img/chip.png" alt="" />
-              <img src="/img/visa.png" alt="" />
+              <img src="/img/visa.png" alt="" class="bank-type" />
             </div>
           </div>
           <label for="cardNumber" class="card-number">
@@ -51,8 +51,10 @@
           </label>
           <div class="card-details">
             <div class="card-holder-info">
-              <label for="cardHolderInfo">Card Holder</label>
-              <label for="cardHolder" class="card-holder-name">Full Name</label>
+              <div id="cardHolder">Card Holder</div>
+              <label for="cardHolderName" class="card-holder-name"
+                >Full Name</label
+              >
             </div>
             <div class="card-date">
               <p>Expires</p>
@@ -69,21 +71,38 @@
         <div class="card-back">
           <div class="card-magnetic-line"></div>
           <div class="card-cvv-white">
-            <div class="card-cvv-content"></div>
+            <div class="card-cvv-content">
+              <span></span>
+            </div>
           </div>
           <div class="back-img">
-            <img src="/img/visa.png" alt="" />
+            <img src="/img/visa.png" alt="" class="back-img-change" />
           </div>
         </div>
       </div>
       <div class="card-form">
         <div class="card-input">
-          <label for="cardNumber" class="card-number-label">Card Number</label>
-          <input type="text" maxlength="19" class="card-number-input" />
+          <div class="popup">
+            <div class="card-number-label">Card Number</div>
+            <span class="popuptext" id="myPopup">Only numbers allowed</span>
+          </div>
+          <input
+            type="text"
+            maxlength="19"
+            class="card-number-input"
+            id="cardNumber"
+            required
+          />
         </div>
         <div class="card-input">
-          <label for="cardHolder" class="card-holder-label">Card Holders</label>
-          <input type="text" maxlength="19" class="card-holder-input" />
+          <div class="card-holder-label">Card Holders</div>
+          <input
+            type="text"
+            maxlength="19"
+            class="card-holder-input"
+            required
+            id="cardHolderName"
+          />
         </div>
         <div class="card-select">
           <div class="card-select-data">
