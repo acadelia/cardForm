@@ -21,11 +21,11 @@ const cardDateBord = document.querySelector(".card-date");
 // let popupShown = false;
 
 cardNumberInput.addEventListener("beforeinput", (e) => {
-  const inputType = e.inputType;
+  // const inputType = e.inputType;
 
-  if (inputType === "insertText" && /\D/.test(e.data)) {
+  if (e.inputType === "insertText" && /\D/.test(e.data)) {
     showPopup();
-    e.preventDefault();
+    // e.preventDefault();
   }
 });
 
@@ -35,7 +35,8 @@ cardNumberInput.addEventListener("input", () => {
 });
 
 const updateCardNumber = (cardNumber) => {
-  format(cardNumber);
+  // format(cardNumber);
+  cardNumberInput.value = cardNumber.replace(/(\d{4})/g, "$1 ").trim();
 
   cardNumberDisplay.forEach((element, i) => {
     const currentDigit = cardNumber[i] || "#";
@@ -61,6 +62,39 @@ const updateCardNumber = (cardNumber) => {
     }
   });
 };
+
+// const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// const updateCardNumber = async (cardNumber) => {
+//   // format(cardNumber);
+//   cardNumberInput.value = cardNumber.replace(/(\d{4})/g, "$1 ").trim();
+
+//   for (let i = 0; i < cardNumber.length; i++) {
+//     const currentDigit = cardNumber[i] || "#";
+//     const element = cardNumberDisplay[i];
+
+//     if (element.textContent !== currentDigit) {
+//       element.textContent = "#";
+//       element.classList.add("slide");
+//       await sleep(50);
+//       if (element.textContent === "#") {
+//         element.textContent = currentDigit;
+//         element.classList.remove("slide");
+//       }
+//     }
+//   }
+
+//   if (cardNumber[0] === "4") {
+//     bankType.src = "/img/mastercard.png";
+//     backImage.src = "/img/mastercard.png";
+//   } else if (cardNumber[0] === "5") {
+//     bankType.src = "/img/amex.png";
+//     backImage.src = "/img/amex.png";
+//   } else {
+//     bankType.src = "/img/visa.png";
+//     backImage.src = "/img/visa.png";
+//   }
+// };
 
 const format = (cardNumber) => {
   let formattedValue = cardNumber.replace(/(\d{4})/g, "$1 ").trim();
@@ -138,19 +172,19 @@ const years = ["2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"];
 completeaza("cardMonth", months);
 completeaza("cardYear", years);
 
-const facemBorder = (element, classList) => {
-  element.addEventListener("focus", () => {
-    classList.add("border");
-  });
-  element.addEventListener("focusout", () => {
-    classList.remove("border");
-  });
-};
+// const facemBorder = (element, classList) => {
+//   element.addEventListener("focus", () => {
+//     classList.add("border");
+//   });
+//   element.addEventListener("focusout", () => {
+//     classList.remove("border");
+//   });
+// };
 
-facemBorder(cardNumberInput, cardNumberBord.classList);
-facemBorder(cardHolderInput, cardNameBord.classList);
-facemBorder(monthInput, cardDateBord.classList);
-facemBorder(yearInput, cardDateBord.classList);
+// facemBorder(cardNumberInput, cardNumberBord.classList);
+// facemBorder(cardHolderInput, cardNameBord.classList);
+// facemBorder(monthInput, cardDateBord.classList);
+// facemBorder(yearInput, cardDateBord.classList);
 
 const addInputEventListeners = (inputElement, updateFunction) => {
   inputElement.addEventListener("input", (e) => {
@@ -172,3 +206,31 @@ submitButton.addEventListener("click", () => {
 });
 
 // border animation :(
+const cardBorder = document.createElement("div");
+cardBorder.classList.add("card-border");
+frontCard.appendChild(cardBorder);
+
+const updateBorderPosition = (element) => {
+  //almost close
+  const cardRect = frontCard.getBoundingClientRect();
+  const elementRect = element.getBoundingClientRect();
+
+  const offsetX = elementRect.left - cardRect.left + window.scrollX;
+  const offsetY = elementRect.top - cardRect.top + window.scrollY;
+
+  cardBorder.style.width = `${elementRect.width}px`;
+  cardBorder.style.height = `${elementRect.height}px`;
+  cardBorder.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+};
+
+cardNumberInput.addEventListener("focus", () => {
+  updateBorderPosition(cardNumberBord);
+});
+
+cardHolderInput.addEventListener("focus", () => {
+  updateBorderPosition(cardNameBord);
+});
+
+monthInput.addEventListener("focus", () => {
+  updateBorderPosition(cardDateBord);
+});
