@@ -69,13 +69,9 @@ const format = (cardNumber) => {
 
 const showPopup = () => {
   myPopup.classList.add("show");
-  myPopup.addEventListener(
-    "animationend",
-    function () {
-      myPopup.classList.remove("show");
-    },
-    { once: true }
-  );
+  myPopup.addEventListener("animationend", () => {
+    myPopup.classList.remove("show");
+  });
 };
 
 const updateCardHolder = (target) => {
