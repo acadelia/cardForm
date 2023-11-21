@@ -17,25 +17,20 @@ const submitButton = document.querySelector(".card-form-button");
 const cardNumberBord = document.querySelector(".card-number");
 const cardNameBord = document.querySelector(".card-holder-info");
 const cardDateBord = document.querySelector(".card-date");
-
-// let popupShown = false;
+const main = document.querySelector(".main");
 
 cardNumberInput.addEventListener("beforeinput", (e) => {
-  // const inputType = e.inputType;
-
   if (e.inputType === "insertText" && /\D/.test(e.data)) {
     showPopup();
-    // e.preventDefault();
   }
 });
 
-cardNumberInput.addEventListener("input", () => {
-  const cardNumber = cardNumberInput.value.replace(/\D/g, "");
+cardNumberInput.addEventListener("input", (e) => {
+  const cardNumber = e.target.value.replace(/\D/g, "");
   updateCardNumber(cardNumber);
 });
 
 const updateCardNumber = (cardNumber) => {
-  // format(cardNumber);
   cardNumberInput.value = cardNumber.replace(/(\d{4})/g, "$1 ").trim();
 
   cardNumberDisplay.forEach((element, i) => {
@@ -64,7 +59,7 @@ const updateCardNumber = (cardNumber) => {
 };
 
 // const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
+// este in proces
 // const updateCardNumber = async (cardNumber) => {
 //   // format(cardNumber);
 //   cardNumberInput.value = cardNumber.replace(/(\d{4})/g, "$1 ").trim();
@@ -83,23 +78,7 @@ const updateCardNumber = (cardNumber) => {
 //       }
 //     }
 //   }
-
-//   if (cardNumber[0] === "4") {
-//     bankType.src = "/img/mastercard.png";
-//     backImage.src = "/img/mastercard.png";
-//   } else if (cardNumber[0] === "5") {
-//     bankType.src = "/img/amex.png";
-//     backImage.src = "/img/amex.png";
-//   } else {
-//     bankType.src = "/img/visa.png";
-//     backImage.src = "/img/visa.png";
-//   }
 // };
-
-const format = (cardNumber) => {
-  let formattedValue = cardNumber.replace(/(\d{4})/g, "$1 ").trim();
-  cardNumberInput.value = formattedValue;
-};
 
 const showPopup = () => {
   myPopup.classList.add("show");
@@ -109,7 +88,7 @@ const showPopup = () => {
 };
 
 const updateCardHolder = (target) => {
-  cardHolderName.textContent = target.value;
+  cardHolderName.textContent = target.value || "FULL NAME";
 };
 
 const updateMonth = (target) => {
@@ -122,9 +101,9 @@ const updateYear = (target) => {
 
 const updateCvv = (target) => {
   const numericCvv = target.value.replace(/\D/g, "");
-
   const cvvDisplay = document.querySelector(".card-cvv-content span");
   cvvDisplay.textContent = numericCvv;
+  target.value = numericCvv;
 };
 
 cardCvvInput.addEventListener("focus", () => {
@@ -138,12 +117,16 @@ cardCvvInput.addEventListener("focusout", () => {
 });
 
 //meniul - ceva gen autocompletare :)
-const completeaza = (selectElement, values) => {
+const completeSelect = (selectElement, values) => {
   const dropdown = document.getElementById(selectElement);
-  const defaultul = document.createElement("option");
-  defaultul.value = "";
-  defaultul.textContent = selectElement === "cardMonth" ? "Month" : "Year";
-  dropdown.appendChild(defaultul);
+  const option = document.createElement("option");
+  option.value = "";
+  const textContent = {
+    cardMonth: "Month",
+    cardYear: "Year",
+  };
+  option.textContent = textContent[selectElement];
+  dropdown.appendChild(option);
 
   values.forEach((value) => {
     const option = document.createElement("option");
@@ -167,26 +150,14 @@ const months = [
   "11",
   "12",
 ];
-const years = ["2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030"];
+const years = ["23", "24", "25", "26", "27", "28", "29", "30"];
 
-completeaza("cardMonth", months);
-completeaza("cardYear", years);
-
-// const facemBorder = (element, classList) => {
-//   element.addEventListener("focus", () => {
-//     classList.add("border");
-//   });
-//   element.addEventListener("focusout", () => {
-//     classList.remove("border");
-//   });
-// };
-
-// facemBorder(cardNumberInput, cardNumberBord.classList);
-// facemBorder(cardHolderInput, cardNameBord.classList);
-// facemBorder(monthInput, cardDateBord.classList);
-// facemBorder(yearInput, cardDateBord.classList);
+completeSelect("cardMonth", months);
+completeSelect("cardYear", years);
 
 const addInputEventListeners = (inputElement, updateFunction) => {
+  // lifehack ) - ceva nu lucreaza :(
+  // inputElement.addEventListener("input", updateFunction);
   inputElement.addEventListener("input", (e) => {
     updateFunction(e.target);
   });
@@ -197,40 +168,69 @@ addInputEventListeners(monthInput, updateMonth);
 addInputEventListeners(yearInput, updateYear);
 addInputEventListeners(cardCvvInput, updateCvv);
 
-submitButton.addEventListener("click", () => {
-  console.log("Card Number:", cardNumberInput.value);
-  console.log("Card Holder:", cardHolderInput.value);
-  console.log("Expiration Month:", monthInput.value);
-  console.log("Expiration Year:", yearInput.value);
-  console.log("CVV:", cardCvvInput.value);
-});
+// border animation am reusit :)
 
-// border animation :(
-const cardBorder = document.createElement("div");
-cardBorder.classList.add("card-border");
+const cardBorder = document.querySelector(".card-border");
 frontCard.appendChild(cardBorder);
 
 const updateBorderPosition = (element) => {
-  //almost close
-  const cardRect = frontCard.getBoundingClientRect();
+  if (!element) {
+    cardBorder.classList.remove("show-border");
+    return;
+  }
   const elementRect = element.getBoundingClientRect();
-
-  const offsetX = elementRect.left - cardRect.left + window.scrollX;
-  const offsetY = elementRect.top - cardRect.top + window.scrollY;
-
-  cardBorder.style.width = `${elementRect.width}px`;
-  cardBorder.style.height = `${elementRect.height}px`;
-  cardBorder.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+  cardBorder.style.width = `${elementRect.width + 13}px`;
+  cardBorder.style.height = `${elementRect.height + 5}px`;
+  if (element === cardNumberBord) {
+    cardBorder.style.transform = `translate(-5px, -100px)`;
+  } else if (element === cardNameBord) {
+    cardBorder.style.width = `${elementRect.width + 150}px`;
+    cardBorder.style.transform = `translate(-5px, -39px)`;
+  } else if (element === cardDateBord) {
+    cardBorder.style.transform = `translate(255px, -39px)`;
+  }
+  cardBorder.classList.add("show-border");
 };
 
-cardNumberInput.addEventListener("focus", () => {
-  updateBorderPosition(cardNumberBord);
-});
+const addFocusBorder = (inputElement, borderElement) => {
+  inputElement.addEventListener("focus", () => {
+    updateBorderPosition(borderElement);
+  });
+};
 
-cardHolderInput.addEventListener("focus", () => {
-  updateBorderPosition(cardNameBord);
-});
+const removeBorder = () => {
+  cardBorder.classList.remove("show-border");
+};
 
-monthInput.addEventListener("focus", () => {
-  updateBorderPosition(cardDateBord);
+const addBlurEvent = (inputElement) => {
+  inputElement.addEventListener("blur", removeBorder);
+};
+
+addFocusBorder(cardNumberInput, cardNumberBord);
+addFocusBorder(cardHolderInput, cardNameBord);
+addFocusBorder(monthInput, cardDateBord);
+addFocusBorder(yearInput, cardDateBord);
+
+addBlurEvent(cardNumberInput);
+addBlurEvent(cardHolderInput);
+addBlurEvent(monthInput);
+addBlurEvent(yearInput);
+
+//update la submit
+const setInitialValues = () => {
+  cardNumberInput.value = "";
+  cardHolderInput.value = "";
+  monthInput.value = "";
+  yearInput.value = "";
+  cardCvvInput.value = "";
+
+  updateCardNumber("");
+  updateCardHolder("");
+  updateMonth({ value: "MM" });
+  updateYear({ value: "YY" });
+  updateCvv("");
+};
+
+submitButton.addEventListener("click", () => {
+  setInitialValues();
 });
