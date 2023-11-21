@@ -34,16 +34,15 @@ const updateCardNumber = (cardNumber) => {
   cardNumberInput.value = cardNumber.replace(/(\d{4})/g, "$1 ").trim();
 
   cardNumberDisplay.forEach((element, i) => {
+    const removeAnimationClass = () => {
+      element.classList.remove("slide");
+      element.removeEventListener("animationend", removeAnimationClass);
+    };
     const currentDigit = cardNumber[i] || "#";
     if (element.textContent !== currentDigit) {
-      element.textContent = "#";
       element.classList.add("slide");
-      setTimeout(() => {
-        if (element.textContent === "#") {
-          element.textContent = currentDigit;
-          element.classList.remove("slide");
-        }
-      }, 400);
+      element.textContent = currentDigit;
+      element.addEventListener("animationend", removeAnimationClass);
     }
     if (cardNumber[0] === "4") {
       bankType.src = "/img/mastercard.png";
@@ -57,28 +56,6 @@ const updateCardNumber = (cardNumber) => {
     }
   });
 };
-
-// const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-// este in proces
-// const updateCardNumber = async (cardNumber) => {
-//   // format(cardNumber);
-//   cardNumberInput.value = cardNumber.replace(/(\d{4})/g, "$1 ").trim();
-
-//   for (let i = 0; i < cardNumber.length; i++) {
-//     const currentDigit = cardNumber[i] || "#";
-//     const element = cardNumberDisplay[i];
-
-//     if (element.textContent !== currentDigit) {
-//       element.textContent = "#";
-//       element.classList.add("slide");
-//       await sleep(50);
-//       if (element.textContent === "#") {
-//         element.textContent = currentDigit;
-//         element.classList.remove("slide");
-//       }
-//     }
-//   }
-// };
 
 const showPopup = () => {
   myPopup.classList.add("show");
